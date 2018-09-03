@@ -1,13 +1,12 @@
 # COL106 Assignments
 
-This repository contains all the assignments I completed during the course COL106 : Data Structure and Algorithms. I took this course under the **Professor Amitabha Bagchi**.
+This repository contains all the assignments I completed during the course [COL106 : Data Structure and Algorithms](http://www.cse.iitd.ernet.in/~bagchi/courses/COL106_18-19/). I took this course under the **Professor Amitabha Bagchi**.
 
-Index of Assignments
+### Assignments
 
-##Mobile Phone Tracking System
-###    1. Basic Structure (Date: 8th September)
-
-####        Programs Included
+1. *Mobile Phone Tracking System*
+   - Basic Structure (Date: 8th September)
+       Programs Included
         a. Node.java
         b. MyLinkedList.java
         c. Myset.java
