@@ -6,7 +6,7 @@ This repository contains all the assignments I completed during the course [COL1
 
 1. *Mobile Phone Tracking System*
    - Basic Structure (Date: 8th September)
-       Programs Included
-        a. Node.java
-        b. MyLinkedList.java
-        c. Myset.java
+     - Programs Included
+        - Node.java
+        - MyLinkedList.java
+        - Myset.java
