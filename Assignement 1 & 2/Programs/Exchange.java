@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class Exchange {
     private int number;
     private Exchange parent;
@@ -7,6 +9,14 @@ public class Exchange {
     public Exchange(int number) {
         this.number = number;
         children = new ExchangeList();
+    }
+
+    public int numChildren() {
+        return children.list.getSize();
+    }
+
+    public boolean isExternal() {
+        return numChildren() == 0;
     }
 
     public MobilePhoneSet residentSet() {
@@ -33,5 +43,9 @@ public class Exchange {
     public void addChild(Exchange e) {
         children.addExchange(e);
         residentSet.uniteMobileSet(e.residentSet());
+    }
+
+    public void deleteChild(Exchange e) {
+        children.removeChild(e);
     }
 }
