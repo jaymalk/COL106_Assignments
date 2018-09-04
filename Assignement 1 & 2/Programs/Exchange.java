@@ -31,6 +31,15 @@ public class Exchange {
 		return this.parent;
 	}
 
+    public Exchange child(int i) {
+        if(children.list.getSize()<i)
+            throw new IllegalArgumentException("Not enough children");
+        Iterator it = children.list.iterator();
+        while(--i!=0)
+            it.next();
+        return (Exchange)it.next();
+    }
+
 	public void setParent(Exchange parent) {
         parent.addChild(this);
 		this.parent = parent;

@@ -22,7 +22,8 @@ public class MobilePhoneSet {
         return mpset;
     }
 
-    public void uniteMobileSet(MobilePhoneSet m2) {
-        unite(mpset, m2.getSet());
+    public void uniteMobileSet(MobilePhoneSet... phoneSets) {
+        for(MobilePhoneSet m: phoneSets)
+            mpset.unite(mpset, m.getSet());
     }
 }
