@@ -3,11 +3,13 @@ public class MobilePhone {
     private boolean phoneIsOn;
     private Exchange baseStation;
 
+    // CONNSTRUCTOR
     public MobilePhone(int number) {
         this.number = number;
         this.phoneIsOn = true;
     }
 
+    // PHONE RELATED FUNNCTIONS
     public int number() {
         return this.number;
     }
@@ -20,10 +22,11 @@ public class MobilePhone {
         this.phoneIsOn = true;
     }
 
-    public void swithOff() {
+    public void switchOff() {
         this.phoneIsOn = false;
     }
 
+    // EXCHANGE RELATED FUNCTIONS
     public Exchange location() {
         if(status())
             return this.baseStation;
@@ -34,8 +37,33 @@ public class MobilePhone {
         this.baseStation = e;
     }
 
+    // FUNCTIONS TO FACILITATE COMPARINSON
     @Override
     public String toString() {
         return String.format("%d", number);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof MobilePhone) {
+            MobilePhone temp = (MobilePhone)o;
+            if(temp.number() == this.number())
+                return true;
+        }
+        return false;
+    }
+
+    /*  Am confused whether to use it or not.... (It's way too easy!)
+
+    @Override
+    public boolean equals(Object o) {
+        return o.hashCode() == this.hashCode();
+    }
+
+    */
+
+    @Override
+    public int hashCode() {
+        return number;
     }
 }

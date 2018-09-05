@@ -3,32 +3,28 @@ import java.util.Iterator;
 public class Myset {
     private MyLinkedList set = new MyLinkedList();
 
-    public boolean isEmpty() {
+    // LINKED LIST RELATED OPERATIONS
+
+    public boolean IsEmpty() {
         return set.isEmpty();
     }
 
-    public void insertItem(Object o) {
+    public void Insert(Object o) {
         if(!set.isMember(o))
             set.Insert(o);
     }
 
-    public boolean isMember(Object o) {
+    public boolean IsMember(Object o) {
         return set.isMember(o);
     }
 
-    public void deleteItem(Object o) {
+    public void Delete(Object o) {
         try {
             set.deleteMember(o);
         }
         catch (IllegalArgumentException e) {
             System.out.println("Object not in set...");
         }
-    }
-
-    public void printSet() {
-        Iterator it = set.iterator();
-        while(it.hasNext())
-            System.out.println(it.next());
     }
 
     public MyLinkedList getSetList() {
@@ -38,6 +34,8 @@ public class Myset {
     public int Size() {
         return set.getSize();
     }
+
+    // SET RELATED OPERATIONS
 
     public Myset Union(Myset... sets) {
         Myset union_set = new Myset();
@@ -50,7 +48,7 @@ public class Myset {
     public void unite(Myset union, Myset part) {
         Iterator it = part.getSetList().iterator();
         while(it.hasNext())
-            union.insertItem(it.next());
+            union.Insert(it.next());
     }
 
     public Myset Intersection(Myset set2) {
@@ -66,13 +64,15 @@ public class Myset {
         Iterator it = b.getSetList().iterator();
         while(it.hasNext()) {
             Object temp = it.next();
-            if(a.isMember(temp))
-                mix.insertItem(temp);
+            if(a.IsMember(temp))
+                mix.Insert(temp);
         }
     }
 
+    // SET ITEM RELATED OPERATIONS
+
     public Object getItem(Object o) {
-        if(isMember(o)) {
+        if(IsMember(o)) {
             Iterator it = set.iterator();
             while(it.hasNext()) {
                 Object o_current = it.next();
@@ -82,6 +82,8 @@ public class Myset {
         }
         throw new IllegalArgumentException("Object not present...");
     }
+
+    /*  MOSTLY REDUNDANT... :(
 
     public void changeItemDetails(Object o_old, Object o_new) {
         Node temp = set.getHead();
@@ -95,5 +97,19 @@ public class Myset {
             temp = temp.next;
         }
         throw new IllegalArgumentException("Object "+o_old+" not present in the set...");
+    }
+
+    */
+
+    // SET PRINTING OPERATION
+
+    public void printSet() {
+        Iterator it = set.iterator();
+        while(it.hasNext())
+            System.out.println(it.next());
+    }
+
+    public void clearSet() {
+        set.clearSet();
     }
 }

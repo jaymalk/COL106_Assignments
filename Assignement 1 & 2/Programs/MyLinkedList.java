@@ -53,6 +53,11 @@ public class MyLinkedList implements Iterable {
         return new ListIterator();
     }
 
+    public void clearSet() {
+        this.head = null;
+        this.size = 0;
+    }
+
     private class ListIterator implements Iterator {
         private Node current = head;
 
