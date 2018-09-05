@@ -18,6 +18,10 @@ public class MobilePhoneSet {
         }
     }
 
+    public boolean containsMobile(int number) {
+        return phoneSet.IsMember(new MobilePhone(number));
+    }
+
     // ADDING A MOBILE PHONE
     public void addMobile(MobilePhone m) {
         phoneSet.Insert(m);
