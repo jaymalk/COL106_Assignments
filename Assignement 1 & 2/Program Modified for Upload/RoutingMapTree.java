@@ -37,7 +37,29 @@ public class RoutingMapTree {
         return false;
     }
 
-    public Exchange getExchange(int identifier) {
+
+    public void switchOn(MobilePhone a, Exchange b) {
+        int mobileNumber = a.getNumber();
+        int involvedExchange = b.getNumber();
+        try {
+            if(Exchange.Root.containsMobile(mobileNumber))
+                throw new IllegalArgumentException("Mobile already regisetered");
+            getExchange(involvedExchange).addMobilePhone(mobileNumber);
+        }
+        catch(IllegalArgumentException e) {
+            System.out.println(actionMessage+": "+"Error - "+e.getMessage());
+        }
+    }
+
+    public void switchOff(MobilePhone a) {
+        int mobileNumber = a.getNumber();
+        if(contains(mobileNumber))
+            topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
+        else
+            System.out.println(actionMessage+": "+"Error - Phone doesn't exist.");
+    }
+
+    public boolean containsNode(int identifier) {
         if(topLevel.hashCode() == identifier)
             return topLevel;
         if(containsExchange(identifier)) {
