@@ -18,21 +18,13 @@ public class ExchangeList {
     }
 
     public Exchange getChild(int id) {
-        if(containsChild(id)) {
-            Iterator it = list.iterator();
-            while(it.hasNext()) {
-                Object temp = it.next();
-                if(temp.hashCode() == id)
-                    return (Exchange)temp;
-            }
-        }
-        Object temp2 = null;
         Iterator it = list.iterator();
         while(it.hasNext()) {
-            Exchange temp = (Exchange)it.next();
-            temp2 = temp.getChildrenList().getChild(id);
+            Exchange e = (Exchange)it.next();
+            if(e.hashCode() == id)
+                return e;
         }
-        return (Exchange)temp2;
+        throw new IllegalArgumentException("No child wth such id present. [ExchangeList:getChild]");
     }
 
     public Exchange getChildAt(int i) {

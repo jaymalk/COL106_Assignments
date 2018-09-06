@@ -38,16 +38,15 @@ public class RoutingMapTree {
     }
 
     public Exchange getExchange(int identifier) {
+        if(topLevel.hashCode() == identifier)
+            return topLevel;
         if(containsExchange(identifier)) {
-            if(topLevel.hashCode() == identifier)
-                return topLevel;
-            for(int i=0; i<topLevel.numChildren(); i++)
+            for(int i=0; i<topLevel.numChildren(); i++) {
                 if(topLevel.subtree(i).containsExchange(identifier))
-                    topLevel.subtree(i).getExchange(identifier);
+                    return topLevel.subtree(i).getExchange(identifier);
+            }
         }
-        else
-            throw new IllegalArgumentException("Exchange not present in the main tree... [RoutingMapTree:getExchange]");
-        return null;
+        throw new IllegalArgumentException("No such exchange in tree [RoutingMapTree:getExchange]");
     }
 
     public void performAction(String actionMessage) {
