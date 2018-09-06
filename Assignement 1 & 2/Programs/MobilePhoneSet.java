@@ -60,12 +60,21 @@ public class MobilePhoneSet {
             phoneSet.unite(phoneSet, m.getSet());
     }
 
-    // PRINTING STATUS OF CONTAINED MOBILES
+    // PRINTING OF CONTAINED MOBILES WITH VARIOUS CONSTRAINTS
     public void printPhonesWithStatus() {
         Iterator it = phoneSet.getSetList().iterator();
         while(it.hasNext()) {
             MobilePhone m = (MobilePhone)it.next();
             System.out.printf("Mobile Phone %s is Switched %s\n", m.toString(), (m.status())?("On"):("Off"));
+        }
+    }
+
+    public void printOnPhones() {
+        Iterator it = phoneSet.getSetList().iterator();
+        while(it.hasNext()) {
+            MobilePhone m = (MobilePhone)it.next();
+            if(m.status())
+                System.out.println(m);
         }
     }
 

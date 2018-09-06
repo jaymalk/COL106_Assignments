@@ -4,7 +4,8 @@ public class ExchangeList {
     public MyLinkedList list = new MyLinkedList();
 
     public void createNewChildExchange(Exchange parent, int identifier) {
-        Exchange e = new Exchange(identifier, parent);
+        Exchange e = new Exchange(identifier);
+        e.setParent(parent);
         list.Insert(e);
     }
 
@@ -25,15 +26,23 @@ public class ExchangeList {
                     return (Exchange)temp;
             }
         }
-        throw new IllegalArgumentException("No child with iden");
+        Object temp2 = null;
+        Iterator it = list.iterator();
+        while(it.hasNext()) {
+            Exchange temp = (Exchange)it.next();
+            temp2 = temp.getChildrenList().getChild(id);
+        }
+        return (Exchange)temp2;
     }
 
     public Exchange getChildAt(int i) {
         if(list.getSize()<i)
-            throw new IllegalArgumentException("Not enough children");
+            throw new IllegalArgumentException("Not enough children [ExchangeList:getChildAt]");
         Iterator it = list.iterator();
-        while(--i!=0)
+        while(list.getSize()-i!=0) {
             it.next();
+            i++;
+        }
         return (Exchange)it.next();
     }
 }

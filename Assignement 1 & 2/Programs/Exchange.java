@@ -8,9 +8,8 @@ public class Exchange {
     private ExchangeList children;
     private MobilePhoneSet residentSet;
 
-    public Exchange(int exchangeId, Exchange parent) {
+    public Exchange(int exchangeId) {
         this.exchangeId = exchangeId;
-        this.parent = parent;
         children = new ExchangeList();
         residentSet =  new MobilePhoneSet();
     }
@@ -24,6 +23,9 @@ public class Exchange {
 		return this.parent;
 	}
 
+    public void setParent(Exchange e) {
+        this.parent = e;
+    }
 
     public boolean isExternal() {
         return numChildren() == 0;
@@ -35,31 +37,64 @@ public class Exchange {
 
     // MOBILE PHONE RELATED OPERATIONS
     public MobilePhoneSet residentSet() {
-        return this.residentSet();
+        return this.residentSet;
+    }
+
+    public void addMobilePhone(int number) {
+        if(!isExternal())
+            throw new IllegalArgumentException("Exchange is not a level zero exchange");
+        MobilePhone temp = new MobilePhone(number);
+        temp.setBaseStation(this);
+        residentSet.addMobile(temp);
+        updateParentSets();
+    }
+
+    public void updateParentSets() {
+        if(isRoot())
+            return;
+        Exchange temp = this;
+        do {
+            temp = temp.getParent();
+            temp.residentSet().uniteMobileSet(residentSet());
+        } while(!temp.isRoot());
+    }
+
+    public void switchOffMobile(int number) {
+        if (containsMobile(number))
+            if(residentSet().getMobilePhone(number).status())
+                residentSet().getMobilePhone(number).switchOff();
+            else
+                throw new IllegalArgumentException("Phone is already switched Off");
+        else
+            throw new IllegalArgumentException("Phone not in the resident set.");
+    }
+
+    public void switchOnMobile(int number) {
+        if (containsMobile(number))
+            residentSet().getMobilePhone(number).switchOff();
     }
 
     public boolean containsMobile(int mobileNumber) {
         return residentSet.containsMobile(mobileNumber);
     }
 
-    public int getLevelZero(int mobileNumber) {
-        if(containsMobile(mobileNumber)) {
-            if(isExternal())
-                return this.exchangeId;
-            else {
-                //++++++
-            }
+    public static int getLevelZero(int mobileNumber) {
+        try {
+            return Root.residentSet().getMobilePhone(mobileNumber).location().getNumber();
         }
-        return -1;
+        catch(Exception e) {
+            throw new IllegalArgumentException("Phone is not regisetered anywhere.");
+        }
     }
 
     // CHILDREN OPERATIONS
     public void addChild(int childNumber) {
+        Exchange.exchangeCount++;
         children.createNewChildExchange(this, childNumber);
     }
 
     public Exchange child(int i) {
-        return children.getChildAt(i);
+        return children.getChildAt(i+1);
     }
 
     public ExchangeList getChildrenList() {
@@ -70,6 +105,7 @@ public class Exchange {
         return children.list.getSize();
     }
 
+    // TREE ASSOCIATED OPERATIONS
     public RoutingMapTree subtree(int i) {
         return new RoutingMapTree(child(i));
     }
@@ -87,5 +123,10 @@ public class Exchange {
     @Override
     public boolean equals(Object o) {
         return hashCode() == o.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Exchange no. "+getNumber());
     }
 }
