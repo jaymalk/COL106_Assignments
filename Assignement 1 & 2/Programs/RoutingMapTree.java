@@ -23,7 +23,7 @@ public class RoutingMapTree {
     }
 
     public void switchOn(MobilePhone a, Exchange b) {
-        int mobileNumber = a.getNumber();
+        int mobileNumber = a.number();
         int involvedExchange = b.getNumber();
         try {
             if(Exchange.Root.containsMobile(mobileNumber))
@@ -31,16 +31,16 @@ public class RoutingMapTree {
             getExchange(involvedExchange).addMobilePhone(mobileNumber);
         }
         catch(IllegalArgumentException e) {
-            System.out.println(actionMessage+": "+"Error - "+e.getMessage());
+            System.out.println("Error - "+e.getMessage());
         }
     }
 
     public void switchOff(MobilePhone a) {
-        int mobileNumber = a.getNumber();
+        int mobileNumber = a.number();
         if(contains(mobileNumber))
             topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
         else
-            System.out.println(actionMessage+": "+"Error - Phone doesn't exist.");
+            System.out.println("Error - Phone doesn't exist.");
     }
 
     public boolean containsNode(int identifier) {
