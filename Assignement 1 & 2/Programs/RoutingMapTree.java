@@ -22,7 +22,28 @@ public class RoutingMapTree {
         return topLevel.containsMobile(mobileNumber);
     }
 
-    public boolean containsExchange(int identifier) {
+    public void switchOn(MobilePhone a, Exchange b) {
+        int mobileNumber = a.getNumber();
+        int involvedExchange = b.getNumber();
+        try {
+            if(Exchange.Root.containsMobile(mobileNumber))
+                throw new IllegalArgumentException("Mobile already regisetered");
+            getExchange(involvedExchange).addMobilePhone(mobileNumber);
+        }
+        catch(IllegalArgumentException e) {
+            System.out.println(actionMessage+": "+"Error - "+e.getMessage());
+        }
+    }
+
+    public void switchOff(MobilePhone a) {
+        int mobileNumber = a.getNumber();
+        if(contains(mobileNumber))
+            topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
+        else
+            System.out.println(actionMessage+": "+"Error - Phone doesn't exist.");
+    }
+
+    public boolean containsNode(int identifier) {
         if(topLevel.hashCode() == identifier)
             return true;
         ExchangeList list = topLevel.getChildrenList();
@@ -30,7 +51,7 @@ public class RoutingMapTree {
         boolean contains = false;
         while(it.hasNext()) {
             Exchange temp = (Exchange)it.next();
-            contains = (contains || temp.associatedTree().containsExchange(identifier));
+            contains = (contains || temp.associatedTree().containsNode(identifier));
             if(contains)
                 return contains;
         }
@@ -40,9 +61,9 @@ public class RoutingMapTree {
     public Exchange getExchange(int identifier) {
         if(topLevel.hashCode() == identifier)
             return topLevel;
-        if(containsExchange(identifier)) {
+        if(containsNode(identifier)) {
             for(int i=0; i<topLevel.numChildren(); i++) {
-                if(topLevel.subtree(i).containsExchange(identifier))
+                if(topLevel.subtree(i).containsNode(identifier))
                     return topLevel.subtree(i).getExchange(identifier);
             }
         }
@@ -57,7 +78,7 @@ public class RoutingMapTree {
             int parentExchange = Integer.parseInt(tokens[1]);
             int newExchange = Integer.parseInt(tokens[2]);
             try {
-                if(Exchange.Root.associatedTree().containsExchange(newExchange))
+                if(Exchange.Root.associatedTree().containsNode(newExchange))
                     throw new IllegalArgumentException("Exchange already in tree");
                 getExchange(parentExchange).addChild(newExchange);
             }
