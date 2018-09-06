@@ -70,6 +70,8 @@ public class MobilePhoneSet {
     }
 
     public String printOnPhones() {
+        if(phoneSet.IsEmpty())
+            return "";
         String fi = "";
         Iterator it = phoneSet.getSetList().iterator();
         while(it.hasNext()) {

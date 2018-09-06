@@ -37,28 +37,6 @@ public class RoutingMapTree {
         return false;
     }
 
-
-    public void switchOn(MobilePhone a, Exchange b) {
-        int mobileNumber = a.number();
-        int involvedExchange = b.getNumber();
-        try {
-            if(Exchange.Root.containsMobile(mobileNumber))
-                throw new IllegalArgumentException("Mobile already regisetered");
-            getExchange(involvedExchange).addMobilePhone(mobileNumber);
-        }
-        catch(IllegalArgumentException e) {
-            System.out.println("Error - "+e.getMessage());
-        }
-    }
-
-    public void switchOff(MobilePhone a) {
-        int mobileNumber = a.number();
-        if(contains(mobileNumber))
-            topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
-        else
-            System.out.println("Error - Phone doesn't exist.");
-    }
-
     public Exchange getExchange(int identifier) {
         if(topLevel.hashCode() == identifier)
             return topLevel;
@@ -69,6 +47,22 @@ public class RoutingMapTree {
             }
         }
         throw new IllegalArgumentException("No such exchange in tree [RoutingMapTree:getExchange]");
+    }
+
+    public void switchOn(MobilePhone a, Exchange b) {
+        int mobileNumber = a.number();
+        int involvedExchange = b.getNumber();
+        if(Exchange.Root.containsMobile(mobileNumber))
+            throw new IllegalArgumentException("Mobile already regisetered");
+        getExchange(involvedExchange).addMobilePhone(mobileNumber);
+    }
+
+    public void switchOff(MobilePhone a) {
+        int mobileNumber = a.number();
+        if(contains(mobileNumber))
+            topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
+        else
+            throw new IllegalArgumentException("Phone doesn't exist.");
     }
 
     public String performAction(String actionMessage) {
@@ -84,7 +78,7 @@ public class RoutingMapTree {
                 getExchange(parentExchange).addChild(newExchange);
             }
             catch(IllegalArgumentException e) {
-                return String.format(actionMessage+": "+"Error: "+e.getMessage());
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
 
@@ -92,21 +86,21 @@ public class RoutingMapTree {
             int involvedExchange = Integer.parseInt(tokens[2]);
             int mobileNumber = Integer.parseInt(tokens[1]);
             try {
-                if(Exchange.Root.containsMobile(mobileNumber))
-                    throw new IllegalArgumentException("Mobile already regisetered");
-                getExchange(involvedExchange).addMobilePhone(mobileNumber);
+                switchOn(new MobilePhone(mobileNumber), new Exchange(involvedExchange));
             }
             catch(IllegalArgumentException e) {
-                return String.format(actionMessage+": "+"Error - "+e.getMessage());
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("switchOffMobile")) {
             int mobileNumber = Integer.parseInt(tokens[1]);
-            if(contains(mobileNumber))
-                topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
-            else
-                return String.format(actionMessage+": "+"Error - Phone doesn't exist.");
+            try {
+                switchOff(new MobilePhone(mobileNumber));
+            }
+            catch(IllegalArgumentException e) {
+                return String.format(actionMessage+": Error - "+e.getMessage());
+            }
         }
 
         else if (actionMessage.contains("queryNthChild")) {
@@ -116,7 +110,7 @@ public class RoutingMapTree {
                 return String.format(actionMessage+": "+getExchange(parentExchange).child(childNumber).getNumber());
             }
             catch(Exception e) {
-                return String.format(actionMessage+": "+"Error - "+e.getMessage());
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
 
@@ -126,7 +120,7 @@ public class RoutingMapTree {
                 return String.format(actionMessage+": "+getExchange(exchangeNumber).residentSet().printOnPhones());
             }
             catch(Exception e) {
-                return String.format(actionMessage+": "+"Error - "+e.getMessage());
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
         return "";
