@@ -69,13 +69,17 @@ public class MobilePhoneSet {
         }
     }
 
-    public void printOnPhones() {
+    public String printOnPhones() {
+        String fi = "";
         Iterator it = phoneSet.getSetList().iterator();
         while(it.hasNext()) {
             MobilePhone m = (MobilePhone)it.next();
-            if(m.status())
-                System.out.println(m);
+            if(m.status()) {
+                fi+=m.toString();
+                fi+=", ";
+            }
         }
+        return fi.substring(0, fi.length()-3);
     }
 
     // EMPTYING THE SET

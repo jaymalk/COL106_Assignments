@@ -62,7 +62,7 @@ public class RoutingMapTree {
                 getExchange(parentExchange).addChild(newExchange);
             }
             catch(IllegalArgumentException e) {
-                System.out.println("Error: "+e.getMessage());
+                System.out.println(actionMessage+": "+"Error: "+e.getMessage());
             }
         }
 
@@ -75,7 +75,7 @@ public class RoutingMapTree {
                 getExchange(involvedExchange).addMobilePhone(mobileNumber);
             }
             catch(IllegalArgumentException e) {
-                System.out.println("Error: "+e.getMessage());
+                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
             }
         }
 
@@ -84,27 +84,27 @@ public class RoutingMapTree {
             if(contains(mobileNumber))
                 topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
             else
-                System.out.println("Error: Phone doesn't exist.");
+                System.out.println(actionMessage+": "+"Error - Phone doesn't exist.");
         }
 
         else if (actionMessage.contains("queryNthChild")) {
             int parentExchange = Integer.parseInt(tokens[1]);
             int childNumber = Integer.parseInt(tokens[2]);
             try {
-                System.out.println(getExchange(parentExchange).child(childNumber).getNumber());
+                System.out.println(actionMessage+": "+getExchange(parentExchange).child(childNumber).getNumber());
             }
             catch(Exception e) {
-                System.out.println("Error: "+e.getMessage());
+                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("queryMobilePhoneSet")) {
             int exchangeNumber = Integer.parseInt(tokens[1]);
             try {
-                getExchange(exchangeNumber).residentSet().printOnPhones();
+                System.out.println(actionMessage+": "+getExchange(exchangeNumber).residentSet().printOnPhones());
             }
             catch(Exception e) {
-                System.out.println("Error: "+e.getMessage());
+                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
             }
         }
 
