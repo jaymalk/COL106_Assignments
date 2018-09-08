@@ -78,6 +78,8 @@ public class MobilePhoneSet {
                 fi=m.toString()+", "+fi;
             }
         }
+        if(fi.length() == 0)
+            return "";
         return fi.substring(0, fi.length()-2);
     }
 

@@ -53,23 +53,40 @@ public class RoutingMapTree {
         int mobileNumber = a.number();
         int involvedExchange = b.getNumber();
         if(Exchange.Root.containsMobile(mobileNumber))
-            throw new IllegalArgumentException("Mobile already regisetered");
+            if(Exchange.Root.residentSet().getMobilePhone(mobileNumber).status())
+                throw new IllegalArgumentException("Mobile already regisetered and switched on");
+            else {
+                Exchange.Root.residentSet().getMobilePhone(mobileNumber).switchOn();
+                Exchange temp = Exchange.Root.residentSet().getMobilePhone(mobileNumber).location();
+                while(!temp.isRoot()) {
+                    temp.residentSet().removeMobile(mobileNumber);
+                    temp = temp.getParent();
+                }
+                Exchange.Root.residentSet().removeMobile(mobileNumber);
+            }
         getExchange(involvedExchange).addMobilePhone(mobileNumber);
     }
 
     public void switchOff(MobilePhone a) {
         int mobileNumber = a.number();
         if(contains(mobileNumber))
-            topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
+            if(Exchange.Root.residentSet().getMobilePhone(mobileNumber).status())
+                topLevel.residentSet().getMobilePhone(mobileNumber).switchOff();
+            else
+                throw new IllegalArgumentException("Phone is already off. ");
         else
             throw new IllegalArgumentException("Phone doesn't exist.");
     }
 
-    public String performAction(String actionMessage) {
+    public void performAction(String actionMessage) {
 
         String[] tokens = actionMessage.split(" ");
 
         if (actionMessage.contains("addExchange")) {
+            if(tokens.length!=3) {
+                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
+                return;
+            }
             int parentExchange = Integer.parseInt(tokens[1]);
             int newExchange = Integer.parseInt(tokens[2]);
             try {
@@ -78,51 +95,70 @@ public class RoutingMapTree {
                 getExchange(parentExchange).addChild(newExchange);
             }
             catch(IllegalArgumentException e) {
-                return String.format(actionMessage+": Error - "+e.getMessage());
+                System.out.println(actionMessage+": "+"Error: "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("switchOnMobile")) {
+            if(tokens.length!=3) {
+                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
+                return;
+            }
             int involvedExchange = Integer.parseInt(tokens[2]);
             int mobileNumber = Integer.parseInt(tokens[1]);
             try {
                 switchOn(new MobilePhone(mobileNumber), new Exchange(involvedExchange));
             }
             catch(IllegalArgumentException e) {
-                return String.format(actionMessage+": Error - "+e.getMessage());
+                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("switchOffMobile")) {
+            if(tokens.length!=2) {
+                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
+                return;
+            }
             int mobileNumber = Integer.parseInt(tokens[1]);
             try {
                 switchOff(new MobilePhone(mobileNumber));
             }
             catch(IllegalArgumentException e) {
-                return String.format(actionMessage+": Error - "+e.getMessage());
+                System.out.println(actionMessage+": Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("queryNthChild")) {
+            if(tokens.length!=3) {
+                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
+                return;
+            }
             int parentExchange = Integer.parseInt(tokens[1]);
             int childNumber = Integer.parseInt(tokens[2]);
             try {
-                return String.format(actionMessage+": "+getExchange(parentExchange).child(childNumber).getNumber());
+                System.out.println(actionMessage+": "+getExchange(parentExchange).child(childNumber).getNumber());
             }
             catch(Exception e) {
-                return String.format(actionMessage+": Error - "+e.getMessage());
+                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("queryMobilePhoneSet")) {
+            if(tokens.length!=2) {
+                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
+                return;
+            }
             int exchangeNumber = Integer.parseInt(tokens[1]);
             try {
-                return String.format(actionMessage+": "+getExchange(exchangeNumber).residentSet().printOnPhones());
+                System.out.println(actionMessage+": "+getExchange(exchangeNumber).residentSet().printOnPhones());
             }
             catch(Exception e) {
-                return String.format(actionMessage+": Error - "+e.getMessage());
+                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
             }
         }
-        return "";
+        else {
+            System.out.println(actionMessage+": Error - Illegal Action.");
+        }
+
     }
 }
