@@ -78,87 +78,67 @@ public class RoutingMapTree {
             throw new IllegalArgumentException("Phone doesn't exist.");
     }
 
-    public void performAction(String actionMessage) {
+    public String performAction(String actionMessage) {
 
         String[] tokens = actionMessage.split(" ");
 
         if (actionMessage.contains("addExchange")) {
-            if(tokens.length!=3) {
-                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
-                return;
-            }
-            int parentExchange = Integer.parseInt(tokens[1]);
-            int newExchange = Integer.parseInt(tokens[2]);
             try {
+                int parentExchange = Integer.parseInt(tokens[1]);
+                int newExchange = Integer.parseInt(tokens[2]);
                 if(Exchange.Root.associatedTree().containsNode(newExchange))
                     throw new IllegalArgumentException("Exchange already in tree");
                 getExchange(parentExchange).addChild(newExchange);
             }
-            catch(IllegalArgumentException e) {
-                System.out.println(actionMessage+": "+"Error: "+e.getMessage());
+            catch(Exception e) {
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("switchOnMobile")) {
-            if(tokens.length!=3) {
-                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
-                return;
-            }
-            int involvedExchange = Integer.parseInt(tokens[2]);
-            int mobileNumber = Integer.parseInt(tokens[1]);
             try {
+                int involvedExchange = Integer.parseInt(tokens[2]);
+                int mobileNumber = Integer.parseInt(tokens[1]);
                 switchOn(new MobilePhone(mobileNumber), new Exchange(involvedExchange));
             }
-            catch(IllegalArgumentException e) {
-                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
+            catch(Exception e) {
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("switchOffMobile")) {
-            if(tokens.length!=2) {
-                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
-                return;
-            }
-            int mobileNumber = Integer.parseInt(tokens[1]);
             try {
+                int mobileNumber = Integer.parseInt(tokens[1]);
                 switchOff(new MobilePhone(mobileNumber));
             }
-            catch(IllegalArgumentException e) {
-                System.out.println(actionMessage+": Error - "+e.getMessage());
+            catch(Exception e) {
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("queryNthChild")) {
-            if(tokens.length!=3) {
-                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
-                return;
-            }
-            int parentExchange = Integer.parseInt(tokens[1]);
-            int childNumber = Integer.parseInt(tokens[2]);
             try {
-                System.out.println(actionMessage+": "+getExchange(parentExchange).child(childNumber).getNumber());
+                int parentExchange = Integer.parseInt(tokens[1]);
+                int childNumber = Integer.parseInt(tokens[2]);
+                return String.format(actionMessage+": "+getExchange(parentExchange).child(childNumber).getNumber());
             }
             catch(Exception e) {
-                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
 
         else if (actionMessage.contains("queryMobilePhoneSet")) {
-            if(tokens.length!=2) {
-                System.out.println(actionMessage+": "+"Error - "+"Input Mismatch");
-                return;
-            }
-            int exchangeNumber = Integer.parseInt(tokens[1]);
             try {
-                System.out.println(actionMessage+": "+getExchange(exchangeNumber).residentSet().printOnPhones());
+                int exchangeNumber = Integer.parseInt(tokens[1]);
+                return String.format(actionMessage+": "+getExchange(exchangeNumber).residentSet().printOnPhones());
             }
             catch(Exception e) {
-                System.out.println(actionMessage+": "+"Error - "+e.getMessage());
+                return String.format(actionMessage+": Error - "+e.getMessage());
             }
         }
         else {
-            System.out.println(actionMessage+": Error - Illegal Action.");
+            return String.format(actionMessage+": Error - Illegal Action.");
         }
-
+        return "";
     }
 }

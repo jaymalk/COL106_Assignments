@@ -14,7 +14,7 @@ public class MobilePhoneSet {
             return (MobilePhone)phoneSet.getItem(new MobilePhone(number));
         }
         catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException("Mobile not present in this set.");
+            throw new IllegalArgumentException("No mobile phone with identifier " + number + " found in the network");
         }
     }
 
@@ -36,7 +36,7 @@ public class MobilePhoneSet {
             phoneSet.Delete(m);
         }
         catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException("Mobile not present in this set.");
+            throw new IllegalArgumentException("No mobile phone with identifier " + m.number() + " found in the network");
         }
     }
 
@@ -46,7 +46,7 @@ public class MobilePhoneSet {
             phoneSet.Delete(new MobilePhone(number));
         }
         catch(IllegalArgumentException e) {
-            throw new IllegalArgumentException("Mobile not present in this set.");
+            throw new IllegalArgumentException("No mobile phone with identifier " + number + " found in the network");
         }
     }
 

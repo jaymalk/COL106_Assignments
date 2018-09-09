@@ -69,11 +69,6 @@ public class Exchange {
             throw new IllegalArgumentException("Phone not in the resident set.");
     }
 
-    public void switchOnMobile(int number) {
-        if (containsMobile(number))
-            residentSet().getMobilePhone(number).switchOff();
-    }
-
     public boolean containsMobile(int mobileNumber) {
         return residentSet.containsMobile(mobileNumber);
     }
