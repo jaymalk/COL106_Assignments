@@ -46,7 +46,7 @@ public class RoutingMapTree {
                     return topLevel.subtree(i).getExchange(identifier);
             }
         }
-        throw new IllegalArgumentException("No such exchange in tree [RoutingMapTree:getExchange]");
+        throw new IllegalArgumentException("No exchange with identifier "+identifier);
     }
 
     public void switchOn(MobilePhone a, Exchange b) {
@@ -75,7 +75,7 @@ public class RoutingMapTree {
             else
                 throw new IllegalArgumentException("Phone is already off. ");
         else
-            throw new IllegalArgumentException("Phone doesn't exist.");
+            throw new IllegalArgumentException("No mobile phone with identifier "+mobileNumber);
     }
 
     public Exchange findPhone(MobilePhone m) {
@@ -169,6 +169,9 @@ public class RoutingMapTree {
                 int parentExchange = Integer.parseInt(tokens[1]);
                 int childNumber = Integer.parseInt(tokens[2]);
                 return String.format(actionMessage+": "+getExchange(parentExchange).child(childNumber).getNumber());
+            }
+            catch(NullPointerException e) {
+                return String.format(actionMessage+": Error - No child "+tokens[2]+" of Exchange "+tokens[1]);
             }
             catch(Exception e) {
                 return String.format(actionMessage+": Error - "+e.getMessage());

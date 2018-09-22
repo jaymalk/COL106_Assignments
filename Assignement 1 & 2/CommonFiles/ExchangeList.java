@@ -29,7 +29,7 @@ public class ExchangeList {
 
     public Exchange getChildAt(int i) {
         if(list.getSize()<i)
-            throw new IllegalArgumentException("Not enough children [ExchangeList:getChildAt]");
+            throw new NullPointerException("No child "+i+"of exchange");
         Iterator it = list.iterator();
         while(list.getSize()-i!=0) {
             it.next();

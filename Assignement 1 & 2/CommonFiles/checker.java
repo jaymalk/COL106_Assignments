@@ -14,7 +14,9 @@ public class checker
 			br = new BufferedReader(new FileReader("actions.txt"));
 
 			while ((actionString = br.readLine()) != null) {
-				r.performAction(actionString);
+				String s = r.performAction(actionString);
+				if(s!="")
+				System.out.println(s);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
