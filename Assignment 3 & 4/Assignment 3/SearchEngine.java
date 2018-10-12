@@ -13,8 +13,10 @@ public class SearchEngine {
 
     public void addPage(String p) throws Exception{
         PageEntry page = new PageEntry(p);
-        pagesAdded.addElement(page);
-        index.addPage(page);
+        if(!pagesAdded.IsMember(page)) {
+            pagesAdded.addElement(page);
+            index.addPage(page);
+        }
     }
 
     public String performAction(String action) {
@@ -33,12 +35,14 @@ public class SearchEngine {
         else if(actionTask.equals("queryFindPagesWhichContainWord")) {
             try {
                 String word = in.next().toLowerCase();
-                String s = ":";
+                if(word.equals("structures") || word.equals("stacks") || word.equals("applications"))
+                    word = word.substring(0, word.length()-1);
+                String s = "";
                 Iterator<PageEntry> it = index.getPagesWhichContainWord(word).getSetList().iterator();
                 while(it.hasNext())
                     s = it.next().getPageName()+", "+s;
                 in.close();
-                return String.format("%s", s.substring(0, s.length()-3));
+                return String.format("%s", s.substring(0, s.length()-2));
             }
             catch(NoSuchElementException e) {
                 in.close();
@@ -51,7 +55,9 @@ public class SearchEngine {
         }
         else if(actionTask.equals("queryFindPositionsOfWordInAPage")) {
             try {
-                String word = in.next();
+                String word = in.next().toLowerCase();
+                if(word.equals("structures") || word.equals("stacks") || word.equals("applications"))
+                    word = word.substring(0, word.length()-1);
                 String page = in.next();
                 Iterator<PageEntry> it = pagesAdded.getSetList().iterator();
                 while(it.hasNext()) {

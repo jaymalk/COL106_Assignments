@@ -83,4 +83,10 @@ public class PageEntry {
         String s = "Page Name : "+pageName+"\n"+pageIndex.toString();
         return s;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        PageEntry p = (PageEntry)o;
+        return pageName.equals(p.getPageName());
+    }
 }

@@ -1,4 +1,6 @@
 all:
 	javac *.java
-	java test > my_answers
+	java test
+	rm *.class
+clean:
 	rm *.class
