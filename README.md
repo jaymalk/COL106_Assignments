@@ -7,3 +7,5 @@ This repository contains all the assignments I completed during the course [COL1
 1. *Mobile Phone Tracking System*
    - Basic Structure (Date: 8th September)
    - Working System (Data: 22nd September)
+2. *Basic Search Engine*
+   - Basic Structure (Date: 13th October)
