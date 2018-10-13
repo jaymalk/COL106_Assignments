@@ -1,5 +1,4 @@
 addPage stack_datastructure_wiki
-addPage words.txt
 queryFindPagesWhichContainWord delhi
 queryFindPagesWhichContainWord stack
 queryFindPagesWhichContainWord wikipedia
@@ -14,5 +13,6 @@ queryFindPagesWhichContainWord jdk
 addPage stackoverflow
 queryFindPagesWhichContainWord function
 addPage stacklighting
+addPage stackmagazine
 addPage stackmagazine
 queryFindPagesWhichContainWord magazines

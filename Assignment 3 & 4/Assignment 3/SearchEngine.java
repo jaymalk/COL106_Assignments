@@ -12,7 +12,8 @@ public class SearchEngine {
     }
 
     public void addPage(String p) throws Exception{
-        PageEntry page = new PageEntry(p);
+        PageEntry page = new PageEntry("./webpages/"+p);
+        page.changePageName(p);
         if(!pagesAdded.IsMember(page)) {
             pagesAdded.addElement(page);
             index.addPage(page);

@@ -9,7 +9,7 @@ public class PageEntry {
     public PageEntry(String pageName) {
         try {
             this.pageName = pageName;
-            List<String> connectorWords =   Arrays.asList("s", "a", "an", "the", "they", "these", "this", "for", "is", "are", "was", "of", "or", "and", "does", "will", "whose");
+            List<String> connectorWords =   Arrays.asList("a", "an", "the", "they", "these", "this", "for", "is", "are", "was", "of", "or", "and", "does", "will", "whose");
             String[] punctuations = {"{", "}", "[", "]", "<", ">", "=", "(", ")", ".", ",", ";", "’", "”", "?", "#", "!", "-", ":", "\""};
             pageIndex = new PageIndex();
             FileInputStream file = new FileInputStream(pageName);
