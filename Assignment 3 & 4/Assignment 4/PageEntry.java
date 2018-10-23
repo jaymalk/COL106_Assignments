@@ -5,6 +5,7 @@ public class PageEntry {
 
     private PageIndex pageIndex;
     private String pageName;
+    private int totalNumberWords;
 
     public PageEntry(String pageName) {
         try {
@@ -31,6 +32,7 @@ public class PageEntry {
                         else
                             pageIndex.addPositionForWord(word, new Position(this, pos));
                     }
+                    this.totalNumberWords = pos;
                     lineScan.close();
                 }
             }
@@ -76,6 +78,10 @@ public class PageEntry {
 
     public String getPageName() {
         return this.pageName;
+    }
+
+    public int getTotalNumberWords() {
+    	return totalNumberWords;
     }
 
     @Override
