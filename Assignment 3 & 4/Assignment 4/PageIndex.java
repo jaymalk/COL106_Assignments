@@ -30,22 +30,12 @@ public class PageIndex {
         return wordEntries;
     }
 
-    public int getTotalWords() {
+    public int getTotalConnectorWords() {
         int totalWords = 0;
         Iterator<WordEntry> it = wordEntries.iterator();
         while(it.hasNext())
             totalWords+=(it.next().getAllPositionsForThisWord().getSize());
         return totalWords;
-    }
-
-    public float wordFrequency(String word) throws Exception {
-        Iterator<WordEntry> it = wordEntries.iterator();
-        while(it.hasNext()) {
-            WordEntry temp = it.next();
-            if(temp.getWord().equals(word))
-                return temp.getTermFrequency(word, this);
-        }
-        return 0;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class MyHashTable {
         // return Math.abs((int)(sum)%5000);
         int h=0;
         for (char e: charArray) {
-            h = (h << 5) | (h >>> 27); 
+            h = (h << 5) | (h >>> 27);
             h += (int) e;
         }
         return Math.abs(h%5000);
@@ -34,7 +34,9 @@ public class MyHashTable {
         MyLinkedList<WordEntry> posList = hashArray[index];
         if(hashArray[index] == null) {
             hashArray[index] = new MyLinkedList<WordEntry>();
-            hashArray[index].Insert(w);;
+            WordEntry newEntry = new WordEntry(word);
+            newEntry.addPositions(w.getAllPositionsForThisWord());
+            hashArray[index].Insert(newEntry);
         }
         else if(posList.isMember(w)) {
             Iterator<WordEntry> it = posList.iterator();

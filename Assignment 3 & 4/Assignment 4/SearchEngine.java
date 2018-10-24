@@ -20,6 +20,26 @@ public class SearchEngine {
         }
     }
 
+    public PageEntry getPage(String pageName) {
+        Iterator<PageEntry> it = pagesAdded.getSetList().iterator();
+        while(it.hasNext()) {
+            PageEntry temp = it.next();
+            if(temp.getPageName().equals(pageName))
+                return temp;
+        }
+        throw new NullPointerException("No page with name "+pageName+" in the inverted index.");
+    }
+
+    public float getRelevance_Word(PageEntry p, String word) {
+        float termFrequency = p.wordFrequency(word);
+        float inverseDocumentFrequency = index.inverseDocumentFrequency(word);
+        return termFrequency*inverseDocumentFrequency;
+    }
+
+    // public float getRelevance_Phrase(PageEntry p, String[] phrase) {
+    //     return 0;
+    // }
+
     public String performAction(String action) {
         Scanner in = new Scanner(action);
         String actionTask = in.next();

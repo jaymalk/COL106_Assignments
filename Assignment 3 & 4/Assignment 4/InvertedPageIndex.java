@@ -5,14 +5,17 @@ import java.util.Arrays;
 public class InvertedPageIndex {
     private SearchEngine searchEngine;
     private MyHashTable indexTable;
+    private int totalPages;
 
     public InvertedPageIndex(SearchEngine s) {
         this.searchEngine = s;
         this.indexTable = new MyHashTable();
+        this.totalPages = 0;
     }
 
     public void addPage(PageEntry p) throws Exception {
         this.indexTable.addAllPositionsInPage(p);
+        totalPages++;
     }
 
     public WordEntry getWordInvertedIndex(String word) throws Exception {
@@ -46,6 +49,19 @@ public class InvertedPageIndex {
 
     public SearchEngine getSearchEngine() {
         return this.searchEngine;
+    }
+
+    public int getTotalPages() {
+    	return totalPages;
+    }
+
+    public float inverseDocumentFrequency(String word) {
+        try {
+            return (float)Math.log((float)getTotalPages()/(float)getPagesWhichContainWord(word).Size());
+        }
+        catch(Exception e) {
+            return 0;
+        }
     }
 
     public void print() {

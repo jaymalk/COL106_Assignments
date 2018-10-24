@@ -81,7 +81,20 @@ public class PageEntry {
     }
 
     public int getTotalNumberWords() {
-    	return totalNumberWords;
+    	return this.totalNumberWords;
+    }
+
+
+    public float wordFrequency(String word) {
+        Iterator<WordEntry> it = pageIndex.getWordEntries().iterator();
+        while(it.hasNext()) {
+            WordEntry temp = it.next();
+            if(temp.getWord().equals(word)) {
+                float wordOccurence = temp.getAllPositionsForThisWord().getSize();
+                return wordOccurence/(float)getTotalNumberWords();
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -94,5 +107,10 @@ public class PageEntry {
     public boolean equals(Object o) {
         PageEntry p = (PageEntry)o;
         return pageName.equals(p.getPageName());
+    }
+
+    @Override
+    public int hashCode() {
+        return getPageName().hashCode();
     }
 }
