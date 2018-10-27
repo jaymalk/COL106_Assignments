@@ -3,8 +3,6 @@ queryFindPagesWhichContainWord delhi
 queryFindPagesWhichContainWord stack
 queryFindPagesWhichContainWord wikipedia
 queryFindPositionsOfWordInAPage stack stack_overflow
-queryFindPositionsOfWordInAPage stack stack_datastructure_wiki
-queryFindPositionsOfWordInAPage stack stack_oracle
 queryFindPagesWhichContainWord allain
 addPage stack_cprogramming
 queryFindPagesWhichContainWord allain
@@ -13,7 +11,6 @@ queryFindPagesWhichContainWord C++
 addPage stack_oracle
 queryFindPagesWhichContainWord jdk
 addPage stackoverflow
-queryFindPositionsOfWordInAPage stack stackoverflow
 queryFindPagesWhichContainWord function
 addPage stacklighting
 addPage stackmagazine

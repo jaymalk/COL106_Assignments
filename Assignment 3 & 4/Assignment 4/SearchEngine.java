@@ -110,7 +110,7 @@ public class SearchEngine {
                         }
                     }
                     if(pages.IsEmpty())
-                        throw new NullPointerException("No webpage contains this phrase");
+                        throw new NullPointerException("No webpage contains the word "+word);
                     Iterator<SearchResult> it2 = MySort.sortThisList(pages).iterator();
                     String s = "";
                     while(it2.hasNext())
