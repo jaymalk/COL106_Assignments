@@ -51,6 +51,17 @@ public class InvertedPageIndex {
         return this.searchEngine;
     }
 
+    public MySet<PageEntry> getPagesWhichContainPhrase(String str[]) {
+        Iterator<PageEntry> it = this.searchEngine.getAddedPages().getSetList().iterator();
+        MySet<PageEntry> pages = new MySet<>();
+        while(it.hasNext()) {
+            PageEntry temp = it.next();
+            if(temp.containsPhrase(str))
+                pages.addElement(temp);
+        }
+        return pages;
+    }
+
     public int getTotalPages() {
     	return totalPages;
     }
@@ -58,6 +69,15 @@ public class InvertedPageIndex {
     public float inverseDocumentFrequency(String word) {
         try {
             return (float)Math.log((float)getTotalPages()/(float)getPagesWhichContainWord(word).Size());
+        }
+        catch(Exception e) {
+            return 0;
+        }
+    }
+
+    public float inverseDocumentFrequency(String[] str) {
+        try {
+            return (float)Math.log((float)getTotalPages()/(float)getPagesWhichContainPhrase(str).Size());
         }
         catch(Exception e) {
             return 0;

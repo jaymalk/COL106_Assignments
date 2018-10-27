@@ -1,16 +1,10 @@
 public class Position implements Comparable<Position> {
     private PageEntry page;
     private int wordPosition;
-    private String word;
 
     public Position(PageEntry p, int wordIndex) {
         this.page = p;
         this.wordPosition = wordIndex;
-    }
-
-    public Position(PageEntry p, int wordIndex, String word) {
-        this(p, wordIndex);
-        this.word = word;
     }
 
     public PageEntry getPageEntry() {
@@ -21,12 +15,8 @@ public class Position implements Comparable<Position> {
         return this.wordPosition;
     }
 
-    public String getWord() {
-        return this.word;
-    }
-
     public boolean equals(Position p) {
-        return (page.equals(p.getPageEntry())) && (wordPosition == p.getWordIndex());
+        return (wordPosition == p.getWordIndex());
     }
 
     @Override

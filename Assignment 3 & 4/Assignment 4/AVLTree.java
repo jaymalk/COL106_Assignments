@@ -1,4 +1,6 @@
-public class AVLTree {
+import java.util.Iterator;
+
+public class AVLTree implements Iterable<Position> {
     Node root;
 
     private class Node {
@@ -294,9 +296,9 @@ public class AVLTree {
     public boolean contains(Position key) {
         if(isEmpty())
             return false;
-        if(root.key().equals(key))
-            return true;
         try {
+            if(root.key().equals(key))
+                return true;
             return (leftSubTree().contains(key) || rightSubTree().contains(key));
         }
         catch(Exception e) {
@@ -487,5 +489,40 @@ public class AVLTree {
     private void setNewRoot() {
         while(root.getParent()!=null)
             root = root.getParent();
+    }
+
+
+    // ITERATOR (INORDER)
+    public Iterator<Position> iterator() {
+        return new InorderIterator();
+    }
+
+    private class InorderIterator implements Iterator<Position> {
+        private AVLTree.Node current;
+
+        public InorderIterator() {
+            current = getRoot();
+            while(current.hasLeft())
+                current = current.getLeft();
+        }
+
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        public Position next() {
+            Position data = current.key();
+            try {
+                current = getInorderSuccessor(current);
+            }
+            catch(Exception e) {
+                current = null;
+            }
+            return data;
+        }
+
+        public void remove() {
+            deleteItem(current);
+        }
     }
 }

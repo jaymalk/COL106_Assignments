@@ -16,3 +16,4 @@ addPage stacklighting
 addPage stackmagazine
 addPage stackmagazine
 queryFindPagesWhichContainWord magazines
+queryFindPositionsOfWordInAPage stack stack_oracle

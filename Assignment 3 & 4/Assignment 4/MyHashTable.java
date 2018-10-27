@@ -28,8 +28,9 @@ public class MyHashTable {
         return Math.abs(h%5000);
     }
 
-    public void addPositionsForWord(WordEntry w) {
+    public void addPositionsForWord(WordEntryUsingAVL w) {
         String word = w.getWord();
+        WordEntry w_check = new WordEntry(word);
         int index = getHashIndex(word);
         MyLinkedList<WordEntry> posList = hashArray[index];
         if(hashArray[index] == null) {
@@ -38,11 +39,11 @@ public class MyHashTable {
             newEntry.addPositions(w.getAllPositionsForThisWord());
             hashArray[index].Insert(newEntry);
         }
-        else if(posList.isMember(w)) {
+        else if(posList.isMember(w_check)) {
             Iterator<WordEntry> it = posList.iterator();
             while(it.hasNext()) {
                 WordEntry temp = it.next();
-                if(temp.equals(w)) {
+                if(temp.equals(w_check)) {
                     temp.addPositions(w.getAllPositionsForThisWord());
                     break;
                 }
@@ -57,7 +58,7 @@ public class MyHashTable {
 
     public void addAllPositionsInPage(PageEntry p) {
         PageIndex pI = p.getPageIndex();
-        Iterator<WordEntry> it = pI.getWordEntries().iterator();
+        Iterator<WordEntryUsingAVL> it = pI.getWordEntries().iterator();
         while(it.hasNext())
             addPositionsForWord(it.next());
     }
@@ -82,11 +83,11 @@ public class MyHashTable {
             MyLinkedList<WordEntry> list = hashArray[i];
             if(list == null)
                 continue;
-            System.out.println("-------");
+            System.out.println("-------"+i+"-------");
             Iterator<WordEntry> it = list.iterator();
             while(it.hasNext())
                 System.out.println(it.next());
-            System.out.println("-------");
+            System.out.println("--------------");
         }
     }
 }

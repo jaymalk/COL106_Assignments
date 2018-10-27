@@ -14,12 +14,10 @@ public class checker
 			br = new BufferedReader(new FileReader("actions.txt"));
 
 			while ((actionString = br.readLine()) != null) {
-				String s = r.performAction(actionString);
-				if(s!="")
-				    System.out.println(s);
+				String a = r.performAction(actionString);
+				if(a!="")
+					System.out.println(a);
 			}
-			System.out.println();
-			r.printInvertedIndex();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

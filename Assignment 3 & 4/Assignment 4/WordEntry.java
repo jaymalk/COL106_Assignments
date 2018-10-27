@@ -23,6 +23,12 @@ public class WordEntry {
             indices.Insert(it.next());
     }
 
+    public void addPositions(AVLTree positions) {
+        Iterator<Position> it = positions.iterator();
+        while(it.hasNext())
+            indices.Insert(it.next());
+    }
+
     public MyLinkedList<Position> getAllPositionsForThisWord() {
         return indices;
     }

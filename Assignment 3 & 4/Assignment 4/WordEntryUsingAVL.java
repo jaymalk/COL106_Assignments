@@ -23,15 +23,27 @@ public class WordEntryUsingAVL {
             indices.addNewElement(it.next());
     }
 
-    AVLTree getAllPositionsForThisWord() {
+    public void addPositions(AVLTree positions) {
+        Iterator<Position> it = positions.iterator();
+        while(it.hasNext())
+            indices.addNewElement(it.next());
+    }
+
+    public boolean hasPosition(int index) {
+        return indices.contains(new Position(null, index));
+    }
+
+    public AVLTree getAllPositionsForThisWord() {
         return indices;
     }
 
     @Override
     public String toString() {
-        if(indices.getRoot() == null)
-            return "";
-        return indices.leftSubTree().toString()+", "+indices.getRootKey().toString()+", "+indices.rightSubTree().toString();
+        Iterator<Position> it = indices.iterator();
+        String s = "";
+        while(it.hasNext())
+            s = it.next().toString()+", "+s;
+        return word+" : { "+s.substring(0, s.length()-2)+" }";
     }
 
     @Override
