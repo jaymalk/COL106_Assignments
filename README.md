@@ -10,3 +10,5 @@ This repository contains all the assignments I completed during the course [COL1
 2. *Basic Search Engine*
    - Basic Structure (Date: 13th October)
    - Working Search Engine (Data: 28th October)
+3. *Online Social Platform*
+   - Complete functioning platform providing various publishing features. (Date: 11th November)
